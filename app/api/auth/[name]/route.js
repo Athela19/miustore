@@ -4,23 +4,23 @@ const prisma = new PrismaClient();
 
 export async function GET(req, { params }) {
     try {
-        const userId = await params;
-        const id = Number(userId.id);
+        const userName = await params
+        const name = userName.name;
 
-        if (!id || isNaN(id)) {
-            return new Response(JSON.stringify({ error: "ID tidak valid." }), {
+        if (!name || typeof name !== 'string') {
+            return new Response(JSON.stringify({ error: "Nama tidak valid." }), {
                 status: 400,
                 headers: { "Content-Type": "application/json" },
             });
         }
 
         const user = await prisma.user.findUnique({
-            where: { id },
+            where: { name },
             select: {
                 id: true,
                 name: true,
                 email: true,
-                profile: true, // pastikan ini ada di schema.prisma
+                profile: true,
             },
         });
 

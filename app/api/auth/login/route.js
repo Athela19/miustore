@@ -28,14 +28,12 @@ export async function POST(req) {
             });
         }
 
-        // Buat token
         const token = jwt.sign(
             { id: user.id, email: user.email },
             process.env.JWT_SECRET,
             { expiresIn: "1d" }
         );
 
-        // Set cookie
         return new Response(JSON.stringify({ message: "Login berhasil" }), {
             status: 200,
             headers: {

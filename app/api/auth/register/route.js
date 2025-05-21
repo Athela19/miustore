@@ -28,16 +28,14 @@ export async function POST(request) {
                 name,
                 email,
                 password: hashedPassword,
-                profile: null, // kalau field ini ada
+                profile: null,
             },
         });
 
-        // Buat token
         const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
             expiresIn: "7d",
         });
 
-        // Set cookie
         const cookie = `token=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=604800${
             process.env.NODE_ENV === "production" ? "; Secure" : ""
         }`;
